@@ -1,7 +1,14 @@
 # Tokenized Notes for Joplin
 
-A plugin that enables users to reference content from other notes using customizable tokens. Simplify content reuse by embedding note snippets dynamically within your notes.
+A plugin for Joplin that enables referencing content from other notes using placeholder tokens.
+
+## Acknowledgments
+
+- [Quick Links Plugin for Joplin](https://github.com/roman-r-m/joplin-plugin-quick-links)
+- [Note Variables Plugin](https://github.com/DanteCoder/JoplinPluginNoteVariables)
+- [Joplin Note Link System](https://github.com/ylc395/joplin-plugin-note-link-system)
+- [Embed search in note](https://github.com/ambrt/joplin-plugin-embed-search)
 
 ## License
 
-[MIT License](LICENCE.md).
+This project is licensed under the [MIT License](LICENCE.md). See `LICENSE.md` for more information.
