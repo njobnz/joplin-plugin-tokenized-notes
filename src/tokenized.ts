@@ -6,9 +6,9 @@ import { markdownScriptId, codeMirrorScriptId, getFilteredTokensCmd } from './co
 
 export namespace tokenizedNotes {
   const getFilteredTokens = async (query: any) => {
-    const noteid = (await joplin.workspace.selectedNote())?.id;
-    const tokens = await findTokenizedNotes();
-    const filter = tokens.filter(note => note.title.startsWith(query.prefix) && note.id !== noteid);
+    const noteId = (await joplin.workspace.selectedNote())?.id;
+    const tokens = await findTokenizedNotes(query.prefix, 10);
+    const filter = tokens.filter(note => note.id !== noteId);
     filter.sort((a, b) => a.title.localeCompare(b.title));
     return filter;
   };

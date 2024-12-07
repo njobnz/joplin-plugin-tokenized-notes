@@ -12,7 +12,7 @@ export default async (CodeMirror: any, _context: ContentScriptContext) => {
     require('@codemirror/autocomplete') as typeof CodeMirrorAutocompleteType;
 
   const completeToken = async (context: CompletionContext): Promise<CompletionResult> => {
-    const { prefix, suffix, idsOnly, autocomplete } = settings();
+    const { prefix, suffix, idOnly, autocomplete } = settings();
     if (!autocomplete) return null;
 
     // prettier-ignore
@@ -33,9 +33,9 @@ export default async (CodeMirror: any, _context: ContentScriptContext) => {
 
     const createApplyCompletionFn = (noteTitle: string, noteId: string) => {
       return (view: EditorView, _completion: Completion, from: number, to: number) => {
-        // TODO: Replace idsOnly here with user choice of note id or title from autocomplete dropdown
+        // TODO: Replace idOnly here with user choice of note id or title from autocomplete dropdown
         // TODO: Let the user select the renderer before inserting the token
-        const tokenName = idsOnly ? noteId : noteTitle;
+        const tokenName = idOnly ? noteId : noteTitle;
         const tokenText = `${prefix}${tokenName}${suffix}`;
         view.dispatch(insertCompletionText(view.state, tokenText, from, to));
       };

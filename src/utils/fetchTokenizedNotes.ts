@@ -3,7 +3,7 @@ import { readSettings as settings } from '../settings';
 import { validateJoplinId as validId } from '../utilities';
 import { parseNoteTokens } from './parseNoteTokens';
 import { findTokenizedNotes } from './findTokenizedNotes';
-import { TokenizedNote, TokenProperties, TokenRenderers } from 'src/types';
+import { TokenizedNote, TokenInfo, TokenRenderers } from 'src/types';
 
 /**
  * Fetches notes for parsed tokens, matching by ID or title.
@@ -13,24 +13,28 @@ import { TokenizedNote, TokenProperties, TokenRenderers } from 'src/types';
  * @returns {Promise<Map<string, TokenizedNote>>} Map of tokens to notes.
  */
 export const fetchTokenizedNotes = async (): Promise<Map<string, TokenizedNote>> => {
+  const { idOnly } = settings();
+  const fields = ['id', 'title', 'body'];
   const tokens: Map<string, TokenizedNote> = new Map();
   const result = await parseNoteTokens();
-  const items = settings().idsOnly ? [] : await findTokenizedNotes();
+  const notes = idOnly ? [] : await findTokenizedNotes('', 0, fields);
+
+  const fetchNoteById = async (noteId: string) => {
+    try {
+      return await joplin.data.get(['notes', noteId], { fields });
+    } catch (error) {
+      console.error('Error fetching note:', error);
+      return null;
+    }
+  };
 
   for (const key of result) {
-    const properties = parseToken(key);
-    const name = properties.name;
-    const item =
-      items.find(i => i.id === name || i.title === name) || (validId(name) ? { id: name } : null);
-
-    if (item) {
-      try {
-        const note = await joplin.data.get(['notes', item.id], {
-          fields: ['id', 'parent_id', 'title', 'body'],
-        });
-        tokens.set(properties.token, { note, properties });
-      } catch {}
-    }
+    const info = parseToken(key);
+    const { name, token } = info;
+    const note =
+      notes.find(i => i.id === name || i.title === name) ||
+      (validId(name) ? await fetchNoteById(name) : null);
+    if (note) tokens.set(token, { note, info });
   }
 
   return tokens;
@@ -42,7 +46,7 @@ export const fetchTokenizedNotes = async (): Promise<Map<string, TokenizedNote>>
  * @param {string} tag - The input token.
  * @returns {Object} An object containing the token name and renderer type.
  */
-function parseToken(tag): TokenProperties {
+function parseToken(tag): TokenInfo {
   enum Renderer {
     Text,
     Inline,

@@ -127,7 +127,7 @@ function processTokens(token: any, tokenized: Record<string, TokenizedNote>): Pr
 
   for (const [name, info] of Object.entries(tokenized)) {
     if (!token.content.includes(name)) continue;
-    updateRenderer(info.properties.renderer);
+    updateRenderer(info.info.renderer);
     token.content = token.content.split(name).join(info.note?.body || '');
   }
 

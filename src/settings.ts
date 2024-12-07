@@ -30,32 +30,22 @@ export const registerSettings = async () => {
       value: true,
     },
 
-    idsOnly: {
+    idOnly: {
       public: true,
       section: sectionName,
       storage: SettingStorage.File,
-      label: localization.setting__idsOnly,
-      description: localization.setting__idsOnly__description,
+      label: localization.setting__idOnly,
+      description: localization.setting__idOnly__description,
       type: SettingItemType.Bool,
       value: false,
     },
 
-    folders: {
+    tag: {
       public: true,
       section: sectionName,
       storage: SettingStorage.File,
-      label: localization.setting__folders,
-      description: localization.setting__folders__description,
-      type: SettingItemType.String,
-      value: '',
-    },
-
-    tags: {
-      public: true,
-      section: sectionName,
-      storage: SettingStorage.File,
-      label: localization.setting__tags,
-      description: localization.setting__tags__description,
+      label: localization.setting__tag,
+      description: localization.setting__tag__description,
       type: SettingItemType.String,
       value: '',
     },
@@ -111,12 +101,8 @@ export const registerSettings = async () => {
    */
   const storeSettings = async () => {
     const settings = new Map<string, any>();
-    for (const setting in settingsSpec) {
-      let value: any = (await joplin.settings.values(setting))[setting];
-      if (setting === 'folders' || setting === 'tags')
-        value = value.split(/[ ,;|]/).filter(i => validId(i));
-      settings.set(setting, value);
-    }
+    for (const setting in settingsSpec)
+      settings.set(setting, (await joplin.settings.values(setting))[setting]);
     localStorage.setItem(localStoreSettingsKey, JSON.stringify(Object.fromEntries(settings)));
   };
 

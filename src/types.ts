@@ -1,9 +1,8 @@
 export interface PluginSettings {
   prefix: string;
   suffix: string;
-  folders: string[] | null;
-  tags: string[] | null;
-  idsOnly: boolean;
+  tag: string[] | null;
+  idOnly: boolean;
   blockFence: boolean;
   renderMarkdown: boolean;
   autocomplete: boolean;
@@ -11,10 +10,10 @@ export interface PluginSettings {
 
 export interface TokenizedNote {
   note: any;
-  properties: TokenProperties;
+  info: TokenInfo;
 }
 
-export interface TokenProperties {
+export interface TokenInfo {
   name: string;
   tag: string;
   token: string;

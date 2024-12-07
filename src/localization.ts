@@ -4,12 +4,10 @@ interface AppLocalization {
 
   setting__autocomplete: string;
   setting__autocomplete__description: string;
-  setting__idsOnly: string;
-  setting__idsOnly__description: string;
-  setting__folders: string;
-  setting__folders__description: string;
-  setting__tags: string;
-  setting__tags__description: string;
+  setting__idOnly: string;
+  setting__idOnly__description: string;
+  setting__tag: string;
+  setting__tag__description: string;
   setting__prefix: string;
   setting__prefix__description: string;
   setting__suffix: string;
@@ -22,17 +20,16 @@ interface AppLocalization {
 
 const defaultStrings: AppLocalization = {
   settings__appName: 'Tokenized Notes',
-  settings__description: 'Reference content from other notes using tokens.',
+  settings__description: 'Reference content from other notes using placeholder tokens.',
 
   setting__autocomplete: 'Quick tokens',
   setting__autocomplete__description:
-    'Displays a dropdown of token suggestions in the editor when the opening tag is entered.',
-  setting__idsOnly: 'Note IDs only',
-  setting__idsOnly__description: 'Allows only note IDs to be used as tokens.',
-  setting__folders: 'Folders',
-  setting__folders__description: 'Filter usable notes to a list of folder IDs.',
-  setting__tags: 'Tags',
-  setting__tags__description: 'Filter usable notes to a list of tag IDs.',
+    'Display a dropdown of token suggestions in the editor when the opening tag is entered.',
+  setting__idOnly: 'Note IDs only',
+  setting__idOnly__description: 'Allow only note IDs to be used as tokens.',
+  setting__tag: 'Tag Filter',
+  setting__tag__description:
+    'Filter tokenizable note titles to the specified tag name. Notes without this tag can still be reference using their note ID.',
   setting__prefix: 'Token prefix',
   setting__prefix__description: 'Opening tag for tokens (default: %%).',
   setting__suffix: 'Token suffix',
