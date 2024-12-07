@@ -1,4 +1,5 @@
 import joplin from 'api';
+import { escapeRegEx as escape } from '../utilities';
 import { readSettings as settings } from '../settings';
 
 /**
@@ -20,11 +21,3 @@ export const parseNoteTokens = async (): Promise<string[]> => {
   );
   return [...body.matchAll(pattern)].map(match => match[1]);
 };
-
-/**
- * Escapes special regex characters in a string.
- *
- * @param {string} str - String to escape.
- * @returns {string} The escaped string.
- */
-const escape = (str: string): string => str.replace(/[-[\]{}()*+!<=:?.\/\\^$|#\s,]/g, '\\$&');

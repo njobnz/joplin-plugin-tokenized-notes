@@ -1,5 +1,6 @@
-import { readSettings as settings } from './settings';
-import { ProcessTokensResult, TokenizedNote } from './types';
+import { readSettings as settings } from '../settings';
+import { ProcessTokensResult, TokenizedNote } from '../types';
+import { localStoreNotesKey } from '../constants';
 import { console } from 'inspector';
 
 let isRendering = false;
@@ -20,7 +21,6 @@ export default function (context) {
        */
       const renderTokenized = (renderer, renderMarkdown = true, replaceContent = true) =>
         function (tokens, idx, options, env, self) {
-          //console.log('renderTokenized', idx, tokens);
           const tokenizedNotes = readTokenizedNotes();
           if (tokenizedNotes && replaceContent && !isRendering) {
             const token = tokens[idx];
@@ -98,7 +98,7 @@ export default function (context) {
  * @returns {Record<string, TokenizedNote>} The tokenized notes from local storage
  */
 const readTokenizedNotes = (): Record<string, TokenizedNote> =>
-  JSON.parse(localStorage.getItem('TokenizedNotes.Notes'));
+  JSON.parse(localStorage.getItem(localStoreNotesKey));
 
 /**
  * Replaces all tokens in a text string with their corresponding note

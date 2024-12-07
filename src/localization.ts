@@ -2,6 +2,10 @@ interface AppLocalization {
   settings__appName: string;
   settings__description: string;
 
+  setting__autocomplete: string;
+  setting__autocomplete__description: string;
+  setting__idsOnly: string;
+  setting__idsOnly__description: string;
   setting__folders: string;
   setting__folders__description: string;
   setting__tags: string;
@@ -10,8 +14,6 @@ interface AppLocalization {
   setting__prefix__description: string;
   setting__suffix: string;
   setting__suffix__description: string;
-  setting__idsOnly: string;
-  setting__idsOnly__description: string;
   setting__blockFence: string;
   setting__blockFence__description: string;
   setting__renderMarkdown: string;
@@ -22,6 +24,9 @@ const defaultStrings: AppLocalization = {
   settings__appName: 'Tokenized Notes',
   settings__description: 'Reference content from other notes using tokens.',
 
+  setting__autocomplete: 'Quick tokens',
+  setting__autocomplete__description:
+    'Displays a dropdown of token suggestions in the editor when the opening tag is entered.',
   setting__idsOnly: 'Note IDs only',
   setting__idsOnly__description: 'Allows only note IDs to be used as tokens.',
   setting__folders: 'Folders',

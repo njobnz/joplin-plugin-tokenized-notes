@@ -1,5 +1,6 @@
 import joplin from 'api';
 import { readSettings as settings } from '../settings';
+import { validateJoplinId as validId } from '../utilities';
 import { parseNoteTokens } from './parseNoteTokens';
 import { findTokenizedNotes } from './findTokenizedNotes';
 import { TokenizedNote, TokenProperties, TokenRenderers } from 'src/types';
@@ -71,11 +72,3 @@ function parseToken(tag): TokenProperties {
 
   return { name, tag, token, renderer };
 }
-
-/**
- * Validates a 32-character hexadecimal Joplin ID.
- *
- * @param {string} str String to validate.
- * @returns {boolean} Validation result.
- */
-const validId = (str: string): boolean => /^[0-9A-Fa-f]{32}$/g.test(str);

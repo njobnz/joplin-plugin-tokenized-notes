@@ -1,9 +1,9 @@
 import joplin from 'api';
+import localization from './localization';
+import { validateJoplinId as validId } from './utilities';
+import { localStoreSettingsKey, settingsSectionName as sectionName } from './constants';
 import { SettingItem, SettingItemType, SettingStorage } from 'api/types';
 import { PluginSettings } from './types';
-import localization from './localization';
-
-const localStoreSettingsKey: string = 'TokenizedNotes.Settings';
 
 /**
  * Reads stored settings from localStorage.
@@ -19,8 +19,17 @@ export const readSettings = (): PluginSettings =>
  * @returns {Promise<void>} A promise.
  */
 export const registerSettings = async () => {
-  const sectionName = 'tuibyte-tokenized-notes';
   const settingsSpec: Record<keyof PluginSettings, SettingItem> = {
+    autocomplete: {
+      public: true,
+      section: sectionName,
+      storage: SettingStorage.File,
+      label: localization.setting__autocomplete,
+      description: localization.setting__autocomplete__description,
+      type: SettingItemType.Bool,
+      value: true,
+    },
+
     idsOnly: {
       public: true,
       section: sectionName,
@@ -120,11 +129,3 @@ export const registerSettings = async () => {
   await joplin.settings.onChange(storeSettings);
   await storeSettings();
 };
-
-/**
- * Validates a 32-character hexadecimal Joplin ID.
- *
- * @param {string} str The string to validate.
- * @returns {boolean} Is valid Joplin ID?
- */
-const validId = (str: string): boolean => /^[0-9A-Fa-f]{32}$/g.test(str);

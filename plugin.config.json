@@ -1,3 +1,3 @@
 {
-	"extraScripts": ["markdown.ts"]
+	"extraScripts": ["plugins/markdownIt.ts", "plugins/codeMirror.ts"]
 }

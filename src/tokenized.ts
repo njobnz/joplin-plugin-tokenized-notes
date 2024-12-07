@@ -1,22 +1,53 @@
 import joplin from 'api';
 import { ContentScriptType } from 'api/types';
 import { loadTokenizedNotes } from './utils/loadTokenizedNotes';
-
-const contentScriptId: string = 'tuibyte-tokenized-notes';
+import { findTokenizedNotes } from './utils/findTokenizedNotes';
+import { markdownScriptId, codeMirrorScriptId, getFilteredTokensCmd } from './constants';
 
 export namespace tokenizedNotes {
+  const getFilteredTokens = async (query: any) => {
+    const noteid = (await joplin.workspace.selectedNote())?.id;
+    const tokens = await findTokenizedNotes();
+    const filter = tokens.filter(note => note.title.startsWith(query.prefix) && note.id !== noteid);
+    filter.sort((a, b) => a.title.localeCompare(b.title));
+    return filter;
+  };
+
+  const onMessageHandler = async (message: any) => {
+    switch (message.command) {
+      case getFilteredTokensCmd:
+        return getFilteredTokens(message.query);
+      default:
+        return { error: 'Unknown command', message };
+    }
+  };
+
   const onNoteChangeHandler = async (e: any) => {
     if (e.event !== 2) return;
     loadTokenizedNotes();
   };
 
-  export async function init() {
+  const registerMarkdown = async () => {
     await joplin.contentScripts.register(
       ContentScriptType.MarkdownItPlugin,
-      contentScriptId,
-      './markdown.js'
+      markdownScriptId,
+      './plugins/markdownIt.js'
     );
-    await loadTokenizedNotes();
+    await joplin.contentScripts.onMessage(markdownScriptId, onMessageHandler);
+  };
+
+  const registerCodeMirror = async () => {
+    await joplin.contentScripts.register(
+      ContentScriptType.CodeMirrorPlugin,
+      codeMirrorScriptId,
+      './plugins/codeMirror.js'
+    );
+    await joplin.contentScripts.onMessage(codeMirrorScriptId, onMessageHandler);
+  };
+
+  export async function init() {
+    await registerMarkdown();
+    await registerCodeMirror();
     await joplin.workspace.onNoteChange(onNoteChangeHandler);
     await joplin.workspace.onNoteSelectionChange(loadTokenizedNotes);
   }

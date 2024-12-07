@@ -6,6 +6,7 @@ export interface PluginSettings {
   idsOnly: boolean;
   blockFence: boolean;
   renderMarkdown: boolean;
+  autocomplete: boolean;
 }
 
 export interface TokenizedNote {
