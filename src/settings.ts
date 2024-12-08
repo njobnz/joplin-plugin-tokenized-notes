@@ -1,6 +1,5 @@
 import joplin from 'api';
 import localization from './localization';
-import { validateJoplinId as validId } from './utilities';
 import { localStoreSettingsKey, settingsSectionName as sectionName } from './constants';
 import { SettingItem, SettingItemType, SettingStorage } from 'api/types';
 import { PluginSettings } from './types';

@@ -2,11 +2,16 @@ import joplin from 'api';
 import { readSettings as settings } from '../settings';
 
 /**
- * Fetches notes based on a search filter and tag settings.
+ * Fetches tokenized notes based on a search filter or tag and returns the specified fields.
  *
- * If no filter or tags are defined, all notes are returned.
+ * This function retrieves notes either using a search query or by fetching all notes
+ * if no filter or tag is provided. Pagination is handled internally to ensure
+ * all matching notes are retrieved up to the specified limit.
  *
- * @returns {Promise<any[]>} The fetched notes.
+ * @param {string} filter - Optional filter string to search note titles. Defaults to an empty string.
+ * @param {number} limit - Optional maximum number of notes to retrieve. Defaults to 0 (no limit).
+ * @param {string[]} fields - Optional array of note fields to include in the response. Defaults to ['id', 'parent_id', 'title'] if not specified.
+ * @returns {Promise<any[]>} A promise that resolves to an array of fetched notes.
  */
 export const findTokenizedNotes = async (
   filter: string = '',
