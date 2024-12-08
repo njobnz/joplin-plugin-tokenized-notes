@@ -7,16 +7,16 @@ import { markdownScriptId, codeMirrorScriptId, getFilteredTokensCmd } from './co
 export namespace tokenizedNotes {
   const getFilteredTokens = async (query: any) => {
     const noteId = (await joplin.workspace.selectedNote())?.id;
-    const tokens = await findTokenizedNotes(query.prefix, 10);
+    const tokens = await findTokenizedNotes(query?.prefix, 10);
     const filter = tokens.filter(note => note.id !== noteId);
     filter.sort((a, b) => a.title.localeCompare(b.title));
     return filter;
   };
 
   const onMessageHandler = async (message: any) => {
-    switch (message.command) {
+    switch (message?.command) {
       case getFilteredTokensCmd:
-        return getFilteredTokens(message.query);
+        return getFilteredTokens(message?.query);
       default:
         return { error: 'Unknown command', message };
     }
