@@ -99,10 +99,14 @@ export const registerSettings = async () => {
    * This function is triggered whenever settings are changed.
    */
   const storeSettings = async () => {
-    const settings = new Map<string, any>();
-    for (const setting in settingsSpec)
-      settings.set(setting, (await joplin.settings.values(setting))[setting]);
-    localStorage.setItem(localStoreSettingsKey, JSON.stringify(Object.fromEntries(settings)));
+    const settings = {};
+    for (const setting in settingsSpec) {
+      let value: any = (await joplin.settings.values(setting))[setting];
+      // The tag setting is only supported as a tag-specific filter, but it can be overridden with a custom filter
+      if (setting === 'tag' && !value.includes(':')) value = `tag:"${value}"`;
+      settings[setting] = value;
+    }
+    localStorage.setItem(localStoreSettingsKey, JSON.stringify(settings));
   };
 
   await joplin.settings.registerSection(sectionName, {

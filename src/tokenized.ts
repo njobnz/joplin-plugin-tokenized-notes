@@ -18,6 +18,7 @@ export namespace tokenizedNotes {
       case getFilteredTokensCmd:
         return getFilteredTokens(message?.query);
       default:
+        console.error('Unknown command', message);
         return { error: 'Unknown command', message };
     }
   };

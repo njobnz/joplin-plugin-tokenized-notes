@@ -40,8 +40,8 @@ export const findTokenizedNotes = async (
   const { tag } = settings();
   const parts = [];
 
-  if (tag) parts.push(`tag:${tag}`);
-  if (filter) parts.push(`title:${filter}*`);
+  if (tag) parts.push(tag);
+  if (filter) parts.push(`title:"${filter}*"`);
 
   const query = parts.length > 0 ? parts.join(' ') : null;
   await fetchNotes(query ? ['search'] : ['notes'], query);
