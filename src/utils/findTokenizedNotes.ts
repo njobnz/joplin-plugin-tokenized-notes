@@ -33,12 +33,13 @@ export const findTokenizedNotes = async (
   };
 
   const { tag } = settings();
-  if (tag || filter) {
-    const query = filter ? `tag:${tag} title:${filter}*` : `tag:${tag}`;
-    await fetchNotes(['search'], query);
-  } else {
-    await fetchNotes(['notes']);
-  }
+  const parts = [];
+
+  if (tag) parts.push(`tag:${tag}`);
+  if (filter) parts.push(`title:${filter}*`);
+
+  const query = parts.length > 0 ? parts.join(' ') : null;
+  await fetchNotes(query ? ['search'] : ['notes'], query);
 
   return results;
 };
