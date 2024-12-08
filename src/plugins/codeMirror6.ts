@@ -17,7 +17,7 @@ export default async (CodeMirror: any, _context: ContentScriptContext) => {
 
     // prettier-ignore
     const wrap = i => i.split('').map(c => `[${escape(c)}]`).join('');
-    const pattern = new RegExp(`${wrap(prefix)}[^()\\[\\]{};>,.\`'" ]*`);
+    const pattern = new RegExp(`${wrap(prefix)}[[|{|(]?[^\n]*`);
     const match = context.matchBefore(pattern);
 
     if (!match || (match.from === match.to && !context.explicit)) return null;
