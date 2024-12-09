@@ -1,10 +1,10 @@
 import { readSettings as settings } from '../utilities';
-import { ProcessTokensResult, TokenizedNote } from '../types';
+import { TokenizedNote, TokenRenderers } from '../types';
 import { localStoreNotesKey } from '../constants';
 
 let isRendering = false;
 
-export default function (_context) {
+export default _context => {
   return {
     plugin: function (markdownIt, _options) {
       const renderProxy = (tokens, idx, options, env, self) =>
@@ -24,13 +24,12 @@ export default function (_context) {
           if (tokenizedNotes && replaceContent && !isRendering) {
             const token = tokens[idx];
             const content = token.content;
-            const results = processTokens(token, tokenizedNotes);
-            renderMarkdown =
-              results.renderer.markdown || (renderMarkdown && settings().renderMarkdown);
-            if (renderMarkdown && !results.renderer.text && token.content !== content) {
+            const renderer = processTokens(token, tokenizedNotes);
+            const markdown = renderer.markdown || (renderMarkdown && settings().renderMarkdown);
+            if (markdown && !renderer.text && token.content !== content) {
               try {
                 isRendering = true; // Prevent recursion when calling markdownIt.render
-                return results.renderer.inline
+                return renderer.inline
                   ? markdownIt.renderInline(token.content)
                   : markdownIt.render(token.content);
               } catch (error) {
@@ -89,7 +88,7 @@ export default function (_context) {
         )(tokens, idx, options, env, self);
     },
   };
-}
+};
 
 /**
  * Fetch the tokenized notes from local storage.
@@ -108,26 +107,24 @@ const readTokenizedNotes = (): Record<string, TokenizedNote> =>
  *                                                    to their note object.
  * @returns {any} The renderer settings.
  */
-function processTokens(token: any, tokenized: Record<string, TokenizedNote>): ProcessTokensResult {
-  const result = {
-    renderer: {
-      text: false,
-      inline: false,
-      markdown: false,
-    },
+function processTokens(token: any, tokenized: Record<string, TokenizedNote>): TokenRenderers {
+  let result = {
+    text: false,
+    inline: false,
+    markdown: false,
   };
 
   // Set renderer based on first found token
   let rendererFound: boolean = false;
   const updateRenderer = renderer => {
     if (rendererFound) return;
-    result.renderer = renderer;
+    result = renderer;
   };
 
-  for (const [name, info] of Object.entries(tokenized)) {
+  for (const [name, data] of Object.entries(tokenized)) {
     if (!token.content.includes(name)) continue;
-    updateRenderer(info.info.renderer);
-    token.content = token.content.split(name).join(info.note?.body || '');
+    updateRenderer(data.info.renderer);
+    token.content = token.content.split(name).join(data.note?.body || '');
   }
 
   return result;
@@ -142,8 +139,8 @@ function processTokens(token: any, tokenized: Record<string, TokenizedNote>): Pr
  * @returns {string} The replaced text.
  */
 function replaceTokens(text: string, tokenized: Record<string, TokenizedNote>): string {
-  if (!text) return text;
-  for (const [name, info] of Object.entries(tokenized))
-    text = text.split(name).join(info.note?.body || '');
+  if (text)
+    for (const [name, info] of Object.entries(tokenized))
+      text = text.split(name).join(info.note?.body || '');
   return text;
 }

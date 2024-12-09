@@ -25,7 +25,3 @@ export interface TokenRenderers {
   inline: boolean;
   markdown: boolean;
 }
-
-export interface ProcessTokensResult {
-  renderer: TokenRenderers;
-}
