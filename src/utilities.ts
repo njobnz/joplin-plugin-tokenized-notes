@@ -1,3 +1,6 @@
+import { localStoreSettingsKey } from './constants';
+import { PluginSettings } from './types';
+
 /**
  * Escapes special regex characters in a string.
  *
@@ -14,3 +17,11 @@ export const escapeRegEx = (str: string): string =>
  * @returns {boolean} Validation result.
  */
 export const validateJoplinId = (str: string): boolean => /^[0-9A-Fa-f]{32}$/g.test(str);
+
+/**
+ * Read stored settings from localStorage.
+ *
+ * @returns {PluginSettings} Plugin settings object.
+ */
+export const readSettings = (): PluginSettings =>
+  JSON.parse(localStorage.getItem(localStoreSettingsKey));

@@ -1,9 +1,8 @@
 import joplin from 'api';
-import { readSettings as settings } from '../settings';
-import { validateJoplinId as validId } from '../utilities';
-import { parseNoteTokens } from './parseNoteTokens';
+import { TokenizedNote, TokenInfo, TokenRenderers } from '../types';
+import { readSettings as settings, validateJoplinId as validId } from '../utilities';
 import { findTokenizedNotes } from './findTokenizedNotes';
-import { TokenizedNote, TokenInfo, TokenRenderers } from 'src/types';
+import { parseNoteTokens } from './parseNoteTokens';
 
 /**
  * Fetches notes for parsed tokens, matching by ID or title.

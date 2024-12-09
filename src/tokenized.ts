@@ -1,5 +1,6 @@
 import joplin from 'api';
 import { ContentScriptType } from 'api/types';
+import { registerSettings } from './settings';
 import { loadTokenizedNotes } from './utils/loadTokenizedNotes';
 import { findTokenizedNotes } from './utils/findTokenizedNotes';
 import { markdownScriptId, codeMirrorScriptId, getFilteredTokensCmd } from './constants';
@@ -47,6 +48,7 @@ export namespace tokenizedNotes {
   };
 
   export async function init() {
+    await registerSettings();
     await registerMarkdown();
     await registerCodeMirror();
     await joplin.workspace.onNoteChange(onNoteChangeHandler);

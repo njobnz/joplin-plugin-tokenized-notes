@@ -1,11 +1,10 @@
-import { readSettings as settings } from '../settings';
+import { readSettings as settings } from '../utilities';
 import { ProcessTokensResult, TokenizedNote } from '../types';
 import { localStoreNotesKey } from '../constants';
-import { console } from 'inspector';
 
 let isRendering = false;
 
-export default function (context) {
+export default function (_context) {
   return {
     plugin: function (markdownIt, _options) {
       const renderProxy = (tokens, idx, options, env, self) =>

@@ -1,6 +1,5 @@
 import joplin from 'api';
-import { escapeRegEx as escape } from '../utilities';
-import { readSettings as settings } from '../settings';
+import { readSettings as settings, escapeRegEx as escape } from '../utilities';
 
 /**
  * Extracts a unique list of tokens from the body of the selected note.

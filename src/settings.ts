@@ -1,16 +1,8 @@
 import joplin from 'api';
-import localization from './localization';
-import { localStoreSettingsKey, settingsSectionName as sectionName } from './constants';
 import { SettingItem, SettingItemType, SettingStorage } from 'api/types';
+import { localStoreSettingsKey, settingsSectionName as sectionName } from './constants';
 import { PluginSettings } from './types';
-
-/**
- * Reads stored settings from localStorage.
- *
- * @returns {PluginSettings} Plugin settings object.
- */
-export const readSettings = (): PluginSettings =>
-  JSON.parse(localStorage.getItem(localStoreSettingsKey));
+import localization from './localization';
 
 /**
  * Registers plugin settings.

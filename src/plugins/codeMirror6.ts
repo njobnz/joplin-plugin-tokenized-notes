@@ -3,9 +3,8 @@ import type * as CodeMirrorAutocompleteType from '@codemirror/autocomplete';
 import type { CompletionContext, CompletionResult, Completion } from '@codemirror/autocomplete';
 import type { EditorView } from '@codemirror/view';
 import type { Extension } from '@codemirror/state';
-import { readSettings as settings } from '../settings';
-import { escapeRegEx as escape } from '../utilities';
 import { getFilteredTokensCmd } from '../constants';
+import { readSettings as settings, escapeRegEx as escape } from '../utilities';
 
 export default async (CodeMirror: any, _context: ContentScriptContext) => {
   const { autocompletion, insertCompletionText } =

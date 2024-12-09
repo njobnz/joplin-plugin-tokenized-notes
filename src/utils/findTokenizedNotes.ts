@@ -1,5 +1,5 @@
 import joplin from 'api';
-import { readSettings as settings } from '../settings';
+import { readSettings as settings } from '../utilities';
 
 /**
  * Fetches tokenized notes based on a search filter or tag and returns the specified fields.
