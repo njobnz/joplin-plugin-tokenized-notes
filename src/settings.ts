@@ -103,7 +103,7 @@ export const registerSettings = async () => {
     for (const setting in settingsSpec) {
       let value: any = (await joplin.settings.values(setting))[setting];
       // The tag setting is only supported as a tag-specific filter, but it can be overridden with a custom filter
-      if (setting === 'tag' && !value.includes(':')) value = `tag:"${value}"`;
+      if (setting === 'tag' && value && !value.includes(':')) value = `tag:"${value}"`;
       settings[setting] = value;
     }
     localStorage.setItem(localStoreSettingsKey, JSON.stringify(settings));
