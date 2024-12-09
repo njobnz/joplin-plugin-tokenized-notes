@@ -115,9 +115,10 @@ function processTokens(token: any, tokenized: Record<string, TokenizedNote>): To
   };
 
   // Set renderer based on first found token
-  let rendererFound: boolean = false;
+  let found: boolean = false;
   const updateRenderer = renderer => {
-    if (rendererFound) return;
+    if (found) return;
+    found = true;
     result = renderer;
   };
 
