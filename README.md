@@ -2,6 +2,8 @@
 
 A plugin for Joplin that enables referencing content from other notes using placeholder tokens.
 
+![Screenshot](docs/screenshot.png)
+
 ## Usage
 
 ### Referencing Notes
@@ -50,4 +52,3 @@ Typing the opening tag (%%) triggers a dropdown menu listing available note titl
 ## License
 
 This project is licensed under the [MIT License](LICENCE.md). See `LICENSE.md` for details.
-
