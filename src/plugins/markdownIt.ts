@@ -27,12 +27,12 @@ export default _context => {
           const tokenizedNotes = readTokenizedNotes();
           if (tokenizedNotes && replaceContent && !isRendering) {
             const content = token.content;
-            const renderer = processTokens(token, tokenizedNotes);
-            const markdown = renderer.markdown || (renderMarkdown && settings().renderMarkdown);
-            if (markdown && !renderer.text && token.content !== content) {
+            const results = processTokens(token, tokenizedNotes);
+            const markdown = results.markdown || (renderMarkdown && settings().renderMarkdown);
+            if (markdown && !results.text && token.content !== content) {
               try {
                 isRendering = true; // Prevent recursion when calling markdownIt.render
-                return renderer.inline
+                return results.inline
                   ? markdownIt.renderInline(token.content)
                   : markdownIt.render(token.content);
               } catch (error) {
