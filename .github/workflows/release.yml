@@ -1,9 +1,9 @@
-name: Build and Release
+name: Build and Release Snapshot
 
 on:
   push:
     tags:
-      - 'build'
+      - 'snapshot'
 
 permissions:
   contents: write
@@ -13,10 +13,11 @@ jobs:
     runs-on: ubuntu-latest
 
     env:
+      Asset_Name: com.tuibyte.TokenizedNotes
       Project_Name: Tokenized Notes
       Release_Name: Tokenized Notes (snapshot)
       Release_Body: "Tokenized Notes early snapshot release"
-      Asset_Name: com.tuibyte.TokenizedNotes
+      Release_Version: "1.0.0"
 
     steps:
       - name: Get date
@@ -29,7 +30,7 @@ jobs:
         id: version
         uses: prompt/actions-commit-hash@v3
         with:
-          prefix: 1.0.0-${{ steps.date.outputs.time }}-
+          prefix: ${{ env.Release_Version }}-${{ steps.date.outputs.time }}-${{ github.run_attempt }}-
 
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -54,8 +55,8 @@ jobs:
         uses: svenstaro/upload-release-action@v2
         with:
           file: publish/${{ env.Asset_Name }}.jpl
-          asset_name: ${{ env.Asset_Name }}-${{ steps.version.outputs.short }}.jp;
+          asset_name: ${{ env.Asset_Name }}-${{ steps.version.outputs.short }}.jpl
           release_name: ${{ env.Release_Name }} (${{ steps.version.outputs.short }})
           body: ${{ env.Release_Body }} ${{ steps.version.outputs.short }}
-          tag: ${{ env.Asset_Name }}-${{ steps.version.outputs.short }}
+          tag: snapshot-${{ steps.version.outputs.short }}
           overwrite: true
