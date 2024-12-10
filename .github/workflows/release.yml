@@ -27,7 +27,7 @@ jobs:
         id: version
         uses: prompt/actions-commit-hash@v3
         with:
-          prefix: 0.0.0-${{ steps.date.outputs.time }}-
+          prefix: 1.0.0-${{ steps.date.outputs.time }}-
 
       - name: Checkout repository
         uses: actions/checkout@v3
@@ -43,10 +43,10 @@ jobs:
       - name: Build release
         run: npm run dist
 
-      - name: Publish release
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+      #- name: Publish release
+      #  run: npm publish
+      #  env:
+      #    NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
 
       - name: Upload release
         uses: svenstaro/upload-release-action@v2
