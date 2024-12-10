@@ -24,7 +24,7 @@ const defaultStrings: AppLocalization = {
   settings__appName: 'Tokenized Notes',
   settings__description: 'Reference content from other notes using placeholder tokens.',
 
-  setting__autocomplete: 'Quick tokens',
+  setting__autocomplete: 'Autocomplete',
   setting__autocomplete__description:
     'Display a dropdown of token suggestions in the editor when the opening tag is entered.',
   setting__fenceOnly: 'Code blocks only',
@@ -33,14 +33,14 @@ const defaultStrings: AppLocalization = {
   setting__idOnly__description: 'Allow only note IDs to be used as tokens.',
   setting__tag: 'Tag filter',
   setting__tag__description:
-    'Filter tokens to the specified tag name. Notes without this tag can still be reference using their note ID.',
+    'Restrict token titles to notes with the specified tag name. Notes without this tag can still be referenced by ID.',
   setting__prefix: 'Token prefix',
-  setting__prefix__description: 'Opening tag for tokens (default: %%).',
+  setting__prefix__description: 'Opening tag for tokens. (default: %%)',
   setting__suffix: 'Token suffix',
-  setting__suffix__description: 'Closing tag for tokens (default: %%).',
+  setting__suffix__description: 'Closing tag for tokens. (default: %%)',
   setting__blockFence: 'Always replace in code blocks',
   setting__blockFence__description:
-    'Automatically replace tokens in fenced code blocks (```). Write `tokenized` in the block header to replace tokens in that block when disabled.',
+    'Automatically replace tokens in fenced code blocks (```). To enable token replacement for a specific block, write `tokenized` in the header.',
   setting__renderMarkdown: 'Always render markdown (caution)',
   setting__renderMarkdown__description:
     'Always render markdown found in referenced notes without using ( ) tags. Markdown is not rendered in code blocks. This feature is highly experimental and may cause rendering issues.',
