@@ -2,9 +2,11 @@ name: Build and Release
 
 on:
   push:
-    branches: ["build"]
-  pull_request:
-    branches: ["build"]
+    tags:
+      - 'build'
+
+permissions:
+  contents: write
 
 jobs:
   build:
@@ -13,7 +15,7 @@ jobs:
     env:
       Project_Name: Tokenized Notes
       Release_Name: Tokenized Notes (snapshot)
-      Release_Body: "Tokenized Notes snapshot release"
+      Release_Body: "Tokenized Notes early snapshot release"
       Asset_Name: com.tuibyte.TokenizedNotes
 
     steps:
