@@ -21,6 +21,16 @@ export const registerSettings = async () => {
       value: true,
     },
 
+    fenceOnly: {
+      public: true,
+      section: sectionName,
+      storage: SettingStorage.File,
+      label: localization.setting__fenceOnly,
+      description: localization.setting__fenceOnly__description,
+      type: SettingItemType.Bool,
+      value: false,
+    },
+
     idOnly: {
       public: true,
       section: sectionName,

@@ -20,9 +20,12 @@ export default _context => {
        */
       const renderTokenized = (renderer, renderMarkdown = true, replaceContent = true) =>
         function (tokens, idx, options, env, self) {
+          const token = tokens[idx];
+          if (settings().fenceOnly && token.tag !== 'code')
+            return renderer(tokens, idx, options, env, self);
+
           const tokenizedNotes = readTokenizedNotes();
           if (tokenizedNotes && replaceContent && !isRendering) {
-            const token = tokens[idx];
             const content = token.content;
             const renderer = processTokens(token, tokenizedNotes);
             const markdown = renderer.markdown || (renderMarkdown && settings().renderMarkdown);

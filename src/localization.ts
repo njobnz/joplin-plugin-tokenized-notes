@@ -4,6 +4,8 @@ interface AppLocalization {
 
   setting__autocomplete: string;
   setting__autocomplete__description: string;
+  setting__fenceOnly: string;
+  setting__fenceOnly__description: string;
   setting__idOnly: string;
   setting__idOnly__description: string;
   setting__tag: string;
@@ -25,6 +27,8 @@ const defaultStrings: AppLocalization = {
   setting__autocomplete: 'Quick tokens',
   setting__autocomplete__description:
     'Display a dropdown of token suggestions in the editor when the opening tag is entered.',
+  setting__fenceOnly: 'Code blocks only',
+  setting__fenceOnly__description: 'Only replace tokens found in fenced code blocks (```).',
   setting__idOnly: 'Note IDs only',
   setting__idOnly__description: 'Allow only note IDs to be used as tokens.',
   setting__tag: 'Tag filter',

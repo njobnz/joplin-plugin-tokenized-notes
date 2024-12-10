@@ -3,6 +3,7 @@ export interface PluginSettings {
   suffix: string;
   tag: string[] | null;
   idOnly: boolean;
+  fenceOnly: boolean;
   blockFence: boolean;
   renderMarkdown: boolean;
   autocomplete: boolean;
