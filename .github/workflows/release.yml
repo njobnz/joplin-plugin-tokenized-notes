@@ -1,0 +1,61 @@
+name: Build and Release
+
+on:
+  push:
+    branches: [ "build" ]
+  pull_request:
+    branches: [ "build" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    env:
+      Project_Name: Tokenized Notes
+      Release_Name: Tokenized Notes (snapshot)
+      Release_Body: "Tokenized Notes snapshot release"
+      Asset_Name: com.tuibyte.TokenizedNotes
+
+    steps:
+    - name: Get date
+      id: date
+      uses: Kaven-Universe/github-action-current-date-time@v1
+      with:
+        format: "YYYY.MM.DD"
+
+    - name: Generate version
+      id: version
+      uses: prompt/actions-commit-hash@v3
+      with:
+        commit: "${{ github.event.workflow_run.head_sha }}"
+        prefix: 0.0.0-${{ steps.date.outputs.time }}-
+
+    - name: Checkout repository
+      uses: actions/checkout@v3
+
+    - name: Install Node
+    - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+    - name: Install dependencies
+      run: npm install
+
+    - name: Build release
+      run: npm run dist
+
+    #- name: Publish release
+    #  run: npm publish
+    #  env:
+    #    NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+
+    - name: Upload release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        file: publish/${{ env.Asset_Name }}.jpl
+        asset_name: ${{ env.Asset_Name }}-${{ steps.version.outputs.short }}.jp;
+        release_name: ${{ env.Release_Name }} (${{ steps.version.outputs.short }})
+        body: ${{ env.Release_Body }} ${{ steps.version.outputs.short }}
+        tag: ${{ env.Asset_Name }}-${{ steps.version.outputs.short }}
+        overwrite: true
