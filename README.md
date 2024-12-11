@@ -77,6 +77,7 @@ Typing the opening tag (%%) triggers a dropdown menu listing available note titl
 ## Known issues and limitations
 
 - **Switching Notes:** Tokens may not update immediately when switching between notes. Editing the note usually triggers the tokens to render.
+- **Token Naming:** Token names cannot contain characters reserved for the opening and closing tags, or have spaces at the beginning or end. Use note ID tokens to reference notes with titles that include reserved characters.
 - **Duplicate Titles:** Only the last note found with a duplicate title is used. To avoid ambiguity, reference notes with duplicate titles using their unique note ID.
 - **Nested Tokens:** Nested token replacement is not supported.
 
