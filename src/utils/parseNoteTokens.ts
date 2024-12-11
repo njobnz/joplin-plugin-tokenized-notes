@@ -13,6 +13,8 @@ import { readSettings as settings, escapeRegEx as escape } from '../utilities';
 export const parseNoteTokens = async (): Promise<string[]> => {
   const { prefix, suffix } = settings();
   const body = (await joplin.workspace.selectedNote())?.body ?? '';
-  const pattern = new RegExp(`${escape(prefix)}([^]*?)${escape(suffix)}`, 'g');
+  // prettier-ignore
+  const p = escape(prefix), s = escape(suffix), c = p + s;
+  const pattern = new RegExp(`${p}([^${c}\n\r\\s][^${c}]*[^${c}\n\r\\s]|[^${c}]{1})${s}`, 'g');
   return [...body.matchAll(pattern)].map(match => match[1]);
 };
